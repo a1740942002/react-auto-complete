@@ -7,9 +7,7 @@ function ReactDebounce() {
   const [suggestions, setSuggestion] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [cache, setCache] = useState<Record<string, string[]>>({})
-
   const debounceQuery = useDebounceValue(query)
-  const controller = new AbortController()
 
   // Methods
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +16,7 @@ function ReactDebounce() {
 
   // Effect
   useEffect(() => {
+    const controller = new AbortController()
     const signal = controller.signal
     if (!debounceQuery) {
       return setSuggestion([])

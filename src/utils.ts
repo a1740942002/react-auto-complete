@@ -25,16 +25,3 @@ export function getAutocompleteResults(
     }, Math.random() * 2000)
   })
 }
-
-export function debounce(fn: Function, delay: number = 250) {
-  let timer: number
-
-  return (...args: Array<any>) => {
-    if (timer) {
-      clearTimeout(timer)
-    }
-    timer = setTimeout(() => {
-      fn.apply(null, args)
-    }, delay)
-  }
-}
