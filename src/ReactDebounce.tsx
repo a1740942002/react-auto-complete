@@ -46,14 +46,16 @@ function ReactDebounce() {
     <li key={suggestion}>{suggestion}</li>
   ))
 
+  const autoCompleteResultElement = isLoading ? (
+    <p>Loading...</p>
+  ) : (
+    <ul className="output">{suggestionElement}</ul>
+  )
+
   return (
     <div className="App">
       <input type="text" value={query} onChange={handleChange} />
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <ul className="output">{suggestionElement}</ul>
-      )}
+      {autoCompleteResultElement}
     </div>
   )
 }
