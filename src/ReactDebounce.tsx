@@ -16,8 +16,8 @@ function ReactDebounce() {
 
   // Effect
   useEffect(() => {
-    const controller = new AbortController()
-    const signal = controller.signal
+    let ignore = false
+
     if (!debounceQuery) {
       return setSuggestion([])
     }
@@ -28,16 +28,20 @@ function ReactDebounce() {
 
     ;(async () => {
       setIsLoading(true)
-      const data = await getAutocompleteResults(debounceQuery, signal)
-      setSuggestion(data)
-      setCache({
-        ...cache,
-        [debounceQuery]: data
-      })
+      const data = await getAutocompleteResults(debounceQuery)
+      if (!ignore) {
+        setSuggestion(data)
+        setCache({
+          ...cache,
+          [debounceQuery]: data
+        })
+      }
       setIsLoading(false)
     })()
 
-    return () => controller.abort('cancel request')
+    return () => {
+      ignore = true
+    }
   }, [debounceQuery])
 
   // Computed
